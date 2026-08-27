@@ -12,8 +12,12 @@ of what Cameron has ruled on — it wins over anything else in this file.
 
 ## 1. Platform, locale, voice
 
-Desktop-first: a GitHub profile README renders in a column of roughly 860–900px
-on a laptop, and everything is authored at **880px** and allowed to scale down.
+Desktop-first. Measured live: GitHub's profile README column is **846px** at a
+1512px viewport and **766px** at 1200px. Assets are authored at **880** and are
+therefore always scaled down — so `shoot.py` grades them at 846, not at 1:1.
+Anything that only reads at full size does not read. The wordmark's glyph size
+was raised from 0.86 to 0.94 of the cell for exactly this reason.
+
 Locale en-ZA. Voice is flat and factual — the panels state numbers, they do not
 sell.
 

@@ -347,9 +347,12 @@ def render(theme_name: str, mode: str, built) -> list[str]:
     x0 = (W - COLS * CELL_W) / 2
 
     css = (
-        f"text{{font-size:{CELL_H*0.86:.1f}px;letter-spacing:{CELL_W - CELL_H*0.86*0.6:.2f}px;"
+        # 0.94 of the cell, not 0.86: GitHub's profile README column is 846px, so
+        # an 880-wide asset is ALWAYS scaled down, and at 0.86 the glyphs thinned
+        # to a smudge on the live page even though the baseline looked fine at 1:1.
+        f"text{{font-size:{CELL_H*0.94:.1f}px;letter-spacing:{CELL_W - CELL_H*0.94*0.6:.2f}px;"
         f"white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}}"
-        ".wall{fill:#E7E8EA;fill-opacity:.42}.face{fill:#F2F3F5;fill-opacity:1}"
+        ".wall{fill:#CDD0D6;fill-opacity:.62}.face{fill:#FAFBFC;fill-opacity:1}"
     )
     parts = svg_open(W, H, f"{TEXT} — 3D ASCII wordmark", css)
     parts.append(f'<rect width="{W}" height="{H}" fill="{t.ground}"/>')

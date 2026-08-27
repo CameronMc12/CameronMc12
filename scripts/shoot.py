@@ -26,12 +26,15 @@ ROOT = os.path.abspath(os.path.join(HERE, ".."))
 ASSETS = os.path.join(ROOT, "assets")
 OUT = os.path.join(ROOT, "docs", "04-design", "baselines")
 
-# GitHub's README canvas, measured: content column is 100% of a 1012px pane
+# GitHub's PROFILE README column, measured live at a 1512px viewport: 846px.
+# Assets are authored at 880 and always scaled down, so the gate has to look
+# at 846 or it grades a render nobody sees.
 GH = {
     "dark": {"bg": "#0d1117", "fg": "#e6edf3"},
     "light": {"bg": "#ffffff", "fg": "#1f2328"},
 }
-PANE_W = 1012
+PANE_W = 846
+RENDER_W = 846
 
 
 def page_html(theme: str, imgs: list[tuple[str, int]]) -> str:
@@ -50,7 +53,7 @@ def page_html(theme: str, imgs: list[tuple[str, int]]) -> str:
 
 def shoot(pw, theme: str, imgs: list[tuple[str, int]], out: str, at: float) -> None:
     b = pw.chromium.launch()
-    pg = b.new_page(viewport={"width": PANE_W + 80, "height": 900},
+    pg = b.new_page(viewport={"width": PANE_W + 64, "height": 900},
                     device_scale_factor=2, color_scheme=theme)
     # written into the repo root and navigated to, not set_content: an <img>
     # on an about:blank page cannot load file:// siblings, which reads as a
@@ -76,7 +79,8 @@ def main() -> None:
     args = ap.parse_args()
 
     os.makedirs(OUT, exist_ok=True)
-    widths = {"hero": 880, "wordmark": 880, "heatmap": 880, "portrait": 370}
+    widths = {"hero": RENDER_W, "wordmark": RENDER_W, "heatmap": RENDER_W,
+              "portrait": int(RENDER_W * 340 / 880)}
 
     with sync_playwright() as pw:
         if args.readme:
@@ -84,9 +88,9 @@ def main() -> None:
             # GitHub's own README background at its own column width
             for theme in ("dark", "light"):
                 stack = [
-                    (os.path.join(ASSETS, f"hero-{theme}.svg"), 880),
-                    (os.path.join(ASSETS, f"wordmark-{theme}.svg"), 880),
-                    (os.path.join(ASSETS, f"heatmap-{theme}.svg"), 880),
+                    (os.path.join(ASSETS, f"hero-{theme}.svg"), RENDER_W),
+                    (os.path.join(ASSETS, f"wordmark-{theme}.svg"), RENDER_W),
+                    (os.path.join(ASSETS, f"heatmap-{theme}.svg"), RENDER_W),
                 ]
                 shoot(pw, theme, stack, os.path.join(OUT, f"readme-{theme}.png"), args.at)
             return
