@@ -1,0 +1,5 @@
+# CI only. The daily workflow re-scrapes the contribution calendar and re-inks
+# the two panels that carry live numbers — nothing here needs numpy, Pillow or
+# a font, because the wordmark is static and is rendered locally.
+requests==2.32.3
+beautifulsoup4==4.12.3

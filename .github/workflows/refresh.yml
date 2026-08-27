@@ -1,0 +1,51 @@
+name: Refresh profile art
+
+"on":
+  schedule:
+    - cron: "17 5 * * *"      # ~07:17 SAST daily
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - "data/identity.json"
+      - ".github/workflows/refresh.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - run: pip install -r scripts/requirements.txt
+
+      # Fails the run if the calendar collapses, which is what happens when
+      # "Include private contributions on my profile" gets switched off. Better
+      # a red X than a graph quietly claiming Cameron did nothing all year.
+      - name: Scrape the contribution calendar
+        run: python scripts/fetch_contributions.py
+
+      # Only the two panels carrying live numbers. The wordmark is static and
+      # needs numpy + a macOS font, so it is committed rather than built here.
+      - name: Re-ink the live panels
+        run: |
+          python scripts/render_heatmap.py
+          python scripts/render_hero.py
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: refresh contribution graph [skip ci]"
+          file_pattern: "data/contributions.json assets/heatmap-*.svg assets/hero-*.svg"

@@ -1,0 +1,108 @@
+{
+  "login": "CameronMc12",
+  "name": "Cameron McAlister",
+  "member_since": "2024-09-06",
+  "repos_total": 29,
+  "repos_public": 1,
+  "repos_private": 28,
+  "repos_active_90d": 29,
+  "code_bytes": 45210671,
+  "languages": [
+    {
+      "name": "TypeScript",
+      "bytes": 28685897,
+      "pct": 63.4,
+      "color": "#3178c6"
+    },
+    {
+      "name": "Python",
+      "bytes": 9510274,
+      "pct": 21.0,
+      "color": "#3572A5"
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 2487461,
+      "pct": 5.5,
+      "color": "#f1e05a"
+    },
+    {
+      "name": "Astro",
+      "bytes": 2209508,
+      "pct": 4.9,
+      "color": "#ff5a03"
+    },
+    {
+      "name": "Svelte",
+      "bytes": 1829307,
+      "pct": 4.0,
+      "color": "#ff3e00"
+    },
+    {
+      "name": "Liquid",
+      "bytes": 171815,
+      "pct": 0.4,
+      "color": "#67b8de"
+    },
+    {
+      "name": "PowerShell",
+      "bytes": 109356,
+      "pct": 0.2,
+      "color": "#012456"
+    },
+    {
+      "name": "MQL5",
+      "bytes": 86402,
+      "pct": 0.2,
+      "color": "#4A76B8"
+    },
+    {
+      "name": "PLpgSQL",
+      "bytes": 72716,
+      "pct": 0.2,
+      "color": "#336790"
+    },
+    {
+      "name": "C++",
+      "bytes": 24549,
+      "pct": 0.1,
+      "color": "#f34b7d"
+    },
+    {
+      "name": "Smarty",
+      "bytes": 12598,
+      "pct": 0.0,
+      "color": "#f0c040"
+    },
+    {
+      "name": "Rust",
+      "bytes": 5704,
+      "pct": 0.0,
+      "color": "#dea584"
+    },
+    {
+      "name": "Just",
+      "bytes": 2533,
+      "pct": 0.0,
+      "color": "#384d54"
+    },
+    {
+      "name": "Mako",
+      "bytes": 1297,
+      "pct": 0.0,
+      "color": "#7e858d"
+    },
+    {
+      "name": "CMake",
+      "bytes": 750,
+      "pct": 0.0,
+      "color": "#DA3434"
+    },
+    {
+      "name": "PureBasic",
+      "bytes": 504,
+      "pct": 0.0,
+      "color": "#5a6986"
+    }
+  ]
+}

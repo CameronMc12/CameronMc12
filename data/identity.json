@@ -1,0 +1,18 @@
+{
+  "_comment": "Hand-edited. Cameron owns every line here. The daily workflow never touches this file \u2014 it only refreshes contributions.json. Private repo NAMES deliberately never appear anywhere in this repo; the 'building' list is whatever he chooses to say publicly.",
+  "handle": "CameronMc12",
+  "name": "Cameron McAllister",
+  "role": "Builder \u00b7 performance marketing + software",
+  "location": "South Africa",
+  "now": "Krevio \u2014 work OS, ClickUp parity",
+  "also": "Float \u2014 finance OS \u00b7 New Money \u2014 quant terminal",
+  "prev": "Ikonik Living \u00b7 Mezzanine World \u00b7 Shelving SA",
+  "focus": "Design systems, agent tooling, ad attribution",
+  "links": [
+    {
+      "label": "krevio.co.za",
+      "url": "https://krevio.co.za"
+    }
+  ],
+  "_name_note": "GitHub's display name currently reads 'Cameron McAlister' (one L) while the account email and machine user are 'mcallister' (two). This file uses two. Fix whichever is wrong at github.com/settings/profile."
+}

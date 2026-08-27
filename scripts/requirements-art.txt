@@ -1,0 +1,7 @@
+# Local only. Needed by render_wordmark.py, which rasterises a real TTF and
+# runs a voxel z-buffer. It also needs Futura Condensed ExtraBold from
+# /System/Library/Fonts/Supplemental/Futura.ttc, which does not exist on a
+# GitHub runner — hence wordmark-*.svg is committed, not built in CI.
+-r requirements.txt
+numpy>=2.0
+pillow>=10.0
