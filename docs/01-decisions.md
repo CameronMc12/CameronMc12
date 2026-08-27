@@ -56,3 +56,38 @@ At 490px "CAMERON" got 11 grid columns per letter and 6 rows of cap height,
 which is below the resolution any letterform survives. Across the full 880 it
 gets 30 columns and 21 rows. The reference profile uses three letters, which is
 why a half-width panel works there.
+
+**2026-08-27 — Rebuilt as ten sections in Matrix green; v1 archived.**
+The first build used the Float grammar (lime accent, ASCII wordmark, light and
+dark pairs). Cameron rejected the register as too austere and too much like a
+landing page. The replacement is one dark surface, one phosphor accent, and
+compact bands with no section headlines. v1 is in `_archive/v1-float/` rather
+than deleted.
+
+**2026-08-27 — Dark only, no light pair.**
+Halves the asset count and matches the intent. A reader in GitHub's light theme
+gets a deliberate dark page.
+
+**2026-08-27 — Account buttons are separate SVGs wrapped in markdown anchors.**
+A link inside an `<img>`-embedded SVG never fires, so a single accounts strip
+could not be clicked. Five small images with the `<a>` in the README is the only
+thing that works. The same sandbox rules out hover, so the affordance is a
+looping arrow nudge.
+
+**2026-08-27 — Never rest an element at `opacity:0`.**
+Chromium does not run animations in an offscreen `<img>`-embedded SVG. During
+the full-page gate the contact card and every button rendered blank because
+their resting state was invisible. `animation-fill-mode: both` back-fills the
+from-state anyway, so the invisible state belongs in the keyframe and the base
+style must be visible.
+
+**2026-08-27 — Never put a CSS `transform` on an element with a `transform`
+attribute.** The CSS one replaces the attribute rather than composing with it.
+The button arrows teleported to the top-left corner the moment their nudge
+animation started. Position on an outer group, animate an inner one.
+
+**2026-08-27 — Working hours are measured, not assumed.**
+The section was mocked as a night owl peaking at 22:00. `fetch_hours.py` walks
+real commit timestamps: 93% between 08:00 and 18:00, peak at midday, nothing
+after 21:00. The data rewrote the copy. A made-up number on a public profile is
+a lie with a nice chart around it.

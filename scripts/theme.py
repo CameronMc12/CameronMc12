@@ -1,83 +1,53 @@
 #!/usr/bin/env python3
 """
-Shared design tokens + panel chrome for every profile SVG.
+Tokens and shared chrome for every section SVG.
 
-Direction: "Float instrument panel" -- the grammar from Cameron's Float finance
-OS applied to a GitHub profile. Panels with labelled bars, near-monochrome
-surfaces, one accent (lime) reserved for the number that matters. Not a green
-hacker terminal.
+Direction: "Matrix mainframe". Near-black ground, one phosphor-green accent, mono
+labels, generous negative space. Every section is a compact band you glance at
+rather than a landing-page slab you read — one small caps label on the left, its
+context on the right, then the content. No section headlines.
 
-The single deliberate exception is the Matrix rain panel, which runs in movie
-phosphor green. It is a texture, not chrome -- see DESIGN.md section 10.
+DARK ONLY, on purpose. Digital rain and ASCII shading only read against black,
+and the page is designed as one continuous dark surface. There is no light pair;
+a GitHub reader in light mode gets a deliberate dark page, the way a photograph
+does not invert.
 
-Every renderer emits a dark and a light file; the README picks between them with
-<picture media="(prefers-color-scheme: dark)">, which GitHub honours.
+The page is authored at 846px, which is GitHub's profile README column at a
+1512px viewport, and scales down from there.
 """
 from __future__ import annotations
 
 import html
 
-MONO = "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace"
+W = 846                    # GitHub's profile README column, measured
+PAD = 44                   # page gutter
+GAP = 12                   # gap between cards inside a section
+RADIUS = 10
 
+MONO = ("ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, "
+        "'Liberation Mono', monospace")
+DISPLAY = ("'Archivo', ui-sans-serif, system-ui, -apple-system, "
+           "'Helvetica Neue', Arial, sans-serif")
 
-class Theme:
-    def __init__(self, name: str, **kw):
-        self.name = name
-        for k, v in kw.items():
-            setattr(self, k, v)
+GROUND = "#07090A"
+PANEL = "#0C1013"
+INSET = "#111619"
+RULE = "#1A2226"
+RULE_STRONG = "#26333A"
+CHALK = "#E7F0EA"
+MUTED = "#7E9188"
+DIM = "#495D54"
 
+GREEN = "#00FF41"          # phosphor, the accent
+GREEN_MID = "#12B24A"
+GREEN_DEEP = "#0B7A2C"
+GREEN_DARK = "#0A3D1B"
+WHITE_HOT = "#D8FFE4"      # the bright head of a rain drop
 
-DARK = Theme(
-    "dark",
-    ground="#0A0A0B",
-    panel="#131315",
-    panel_top="#17171A",     # top of the panel gradient
-    inset="#1B1B1F",
-    border="#242428",
-    border_strong="#33333A",
-    text="#EDEDEF",
-    muted="#8A8A93",
-    dim="#56565E",
-    accent="#E4F222",        # lime -- the one accent
-    accent_dim="#8E991A",
-    ramp=["#1C1C20", "#3F450F", "#6C7714", "#9CAD16", "#C4DA1C", "#E4F222"],
-    phosphor="#00FF41",      # matrix rain only
-    phosphor_dim="#0B7A2C",
-    phosphor_head="#D8FFE4",
-    # ASCII shading floor. On black, a sparse glyph still glows, so the ramp can
-    # use its whole range.
-    ramp_floor=0.0,
-)
+# heatmap ramp, empty -> max
+RAMP = ["#141A1D", GREEN_DARK, GREEN_DEEP, GREEN_MID, GREEN, WHITE_HOT]
 
-LIGHT = Theme(
-    "light",
-    ground="#F6F6F3",
-    panel="#FFFFFF",
-    panel_top="#FFFFFF",
-    inset="#F2F2EE",
-    border="#E3E3DE",
-    border_strong="#CFCFC8",
-    text="#16161A",
-    muted="#6C6C74",
-    dim="#9C9CA4",
-    accent="#6E7D00",        # lime reads as deep olive on white
-    accent_dim="#A9BC12",
-    ramp=["#ECECE6", "#DDE79B", "#C6D850", "#A9C000", "#85991A", "#5E6E12"],
-    phosphor="#0F9D3A",
-    phosphor_dim="#8FD0A4",
-    phosphor_head="#04471A",
-    # On white the same sparse glyph is a ghost -- ink is what you SEE, so every
-    # lit cell has to sit in the dense half of the ramp or the wordmark vanishes.
-    ramp_floor=0.52,
-)
-
-THEMES = {"dark": DARK, "light": LIGHT}
-
-# --- panel geometry (Float grammar) ---------------------------------------
-RADIUS = 14
-BAR_H = 38
-PAD = 18
-FOOT_H = 40
+LABEL_H = 50               # the compact section label row
 
 
 def esc(s) -> str:
@@ -87,8 +57,7 @@ def esc(s) -> str:
 def svg_open(w: int, h: int, title: str, css: str = "") -> list[str]:
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
-        f'viewBox="0 0 {w} {h}" role="img" aria-label="{esc(title)}" '
-        f'font-family="{MONO}">',
+        f'viewBox="0 0 {w} {h}" role="img" aria-label="{esc(title)}">',
         f"<title>{esc(title)}</title>",
     ]
     if css:
@@ -96,80 +65,28 @@ def svg_open(w: int, h: int, title: str, css: str = "") -> list[str]:
     return parts
 
 
-def panel(t: Theme, w: int, h: int, label: str, meta: str = "", uid: str = "p",
-          ground: bool = True) -> list[str]:
-    """Panel shell: rounded card + labelled top bar. `ground` paints the page
-    behind it, which a composed panel must not do -- it would repaint over its
-    neighbour."""
-    return ([f'<rect width="{w}" height="{h}" fill="{t.ground}"/>'] if ground else []) + [
-        "<defs>"
-        f'<linearGradient id="{uid}g" x1="0" y1="0" x2="0" y2="1">'
-        f'<stop offset="0" stop-color="{t.panel_top}"/>'
-        f'<stop offset="1" stop-color="{t.panel}"/></linearGradient>'
-        "</defs>",
-        f'<rect x="0.5" y="0.5" width="{w-1}" height="{h-1}" rx="{RADIUS}" '
-        f'fill="url(#{uid}g)" stroke="{t.border}" stroke-width="1"/>',
-        f'<line x1="1" y1="{BAR_H}" x2="{w-1}" y2="{BAR_H}" stroke="{t.border}"/>',
-        f'<text x="{PAD}" y="{BAR_H/2 + 4:.0f}" fill="{t.muted}" font-size="10" '
-        f'letter-spacing="1.4" font-weight="600">{esc(label.upper())}</text>',
-    ] + (
-        [
-            f'<text x="{w-PAD}" y="{BAR_H/2 + 4:.0f}" fill="{t.dim}" font-size="10" '
-            f'letter-spacing="0.6" text-anchor="end">{esc(meta)}</text>'
-        ]
-        if meta
-        else []
-    )
+def ground(w: int = W, h: int = 0) -> str:
+    return f'<rect width="{w}" height="{h}" fill="{GROUND}"/>'
 
 
-# The two ART panels (rain, wordmark) keep a near-black body in BOTH themes;
-# only the DATA panels (system, contributions) follow the reader's theme.
-# ASCII and digital rain are photographs, not chrome: their whole read depends
-# on sparse marks glowing against black, and on white the same marks are a
-# ghost no amount of ink opacity rescues. Only the outer frame adapts, so on a
-# white README they sit as deliberate dark cards rather than broken ones.
-ART_BG = "#08090A"
-ART_BAR = "#0B0C0E"
-ART_RULE = "#22252A"
-ART_LABEL = "#8A8A93"
-ART_META = "#56565E"
-
-
-def art_panel(t: Theme, w: int, h: int, label: str, meta: str, uid: str) -> list[str]:
-    """Always-dark card + bar. Caller draws its content between this and
-    art_frame(), clipped to url(#<uid>card)."""
-    return [
-        f'<defs><clipPath id="{uid}card"><rect x="0.5" y="0.5" width="{w-1}" '
-        f'height="{h-1}" rx="{RADIUS}"/></clipPath></defs>',
-        f'<g clip-path="url(#{uid}card)">',
-        f'<rect width="{w}" height="{h}" fill="{ART_BG}"/>',
-    ]
-
-
-def art_bar(w: int, label: str, meta: str) -> str:
+def label_row(left: str, right: str, y: int = 0, w: int = W) -> str:
+    """The one piece of chrome every section shares: small caps label on the
+    left, context on the right. Replaces the eyebrow + 34px headline pattern,
+    which added ~90px a section and made the page read as a pitch."""
     return (
-        f'<rect y="0" width="{w}" height="{BAR_H}" fill="{ART_BAR}"/>'
-        f'<line x1="0" y1="{BAR_H}" x2="{w}" y2="{BAR_H}" stroke="{ART_RULE}"/>'
-        f'<text x="{PAD}" y="{BAR_H/2 + 4:.0f}" fill="{ART_LABEL}" font-size="10" '
-        f'letter-spacing="1.4" font-weight="600">{esc(label.upper())}</text>'
-        f'<text x="{w-PAD}" y="{BAR_H/2 + 4:.0f}" fill="{ART_META}" font-size="10" '
-        f'letter-spacing="0.6" text-anchor="end">{esc(meta)}</text>'
+        f'<text x="{PAD}" y="{y + 34}" fill="{DIM}" font-family="{MONO}" '
+        f'font-size="11" font-weight="600" letter-spacing="2.2">{esc(left.upper())}</text>'
+        f'<text x="{w - PAD}" y="{y + 34}" fill="{DIM}" font-family="{MONO}" '
+        f'font-size="11" letter-spacing="1.1" text-anchor="end">{esc(right.upper())}</text>'
     )
 
 
-def art_frame(t: Theme, w: int, h: int) -> str:
-    """Closes the card clip and strokes the outer frame. On light the border has
-    to work harder to separate a dark card from a white page."""
-    stroke = t.border if t.name == "dark" else "#C9C9C2"
+def card(x: float, y: float, w: float, h: float, uid: str = "",
+         fill: str = PANEL) -> str:
     return (
-        "</g>"
-        f'<rect x="0.5" y="0.5" width="{w-1}" height="{h-1}" rx="{RADIUS}" '
-        f'fill="none" stroke="{stroke}" stroke-width="1"/>'
+        f'<rect x="{x + 0.5:.1f}" y="{y + 0.5:.1f}" width="{w - 1:.1f}" '
+        f'height="{h - 1:.1f}" rx="{RADIUS}" fill="{fill}" stroke="{RULE}"/>'
     )
-
-
-def footer_rule(t: Theme, w: int, y: float) -> str:
-    return f'<line x1="1" y1="{y:.1f}" x2="{w-1}" y2="{y:.1f}" stroke="{t.border}"/>'
 
 
 def write(path: str, parts: list[str]) -> int:
@@ -178,3 +95,18 @@ def write(path: str, parts: list[str]) -> int:
     with open(path, "w") as f:
         f.write(body)
     return len(body)
+
+
+# --- shared motion ---------------------------------------------------------
+# Reveals play ONCE and freeze (`both`, no repeatCount). The only things that
+# loop are textures: the rain, and the nudge on a button arrow. A read-out that
+# pulses forever is a screensaver.
+REVEAL_CSS = """
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pop{from{opacity:0;transform:translateY(-5px) scale(.86)}to{opacity:1;transform:none}}
+.r{animation:rise .52s cubic-bezier(.2,.8,.2,1) both}
+.w{animation:wipe .5s cubic-bezier(.2,.8,.2,1) both}
+.g{transform-origin:left center;animation:grow .7s cubic-bezier(.2,.8,.2,1) both}
+""".strip()

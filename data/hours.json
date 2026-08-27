@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-08-27T10:20:39Z",
+  "timezone": "Africa/Johannesburg",
+  "repos_scanned": 30,
+  "commits_sampled": 932,
+  "by_hour": [
+    2,
+    6,
+    0,
+    0,
+    0,
+    0,
+    3,
+    5,
+    50,
+    60,
+    94,
+    105,
+    112,
+    87,
+    101,
+    79,
+    95,
+    87,
+    36,
+    4,
+    4,
+    2,
+    0,
+    0
+  ],
+  "peak_hour": 12,
+  "late_share": 0.0107,
+  "quiet_window": [
+    2,
+    6
+  ],
+  "quiet_share": 0.0
+}

@@ -2,7 +2,7 @@
   "_comment": "Hand-edited. Cameron owns every line here. The daily workflow never touches this file \u2014 it only refreshes contributions.json. Private repo NAMES deliberately never appear anywhere in this repo; the 'building' list is whatever he chooses to say publicly.",
   "handle": "CameronMc12",
   "name": "Cameron McAllister",
-  "role": "Builder \u00b7 performance marketing + software",
+  "role": "Web and app designer.",
   "location": "South Africa",
   "now": "Krevio \u2014 work OS, ClickUp parity",
   "also": "Float \u2014 finance OS \u00b7 New Money \u2014 quant terminal",
@@ -14,5 +14,117 @@
       "url": "https://krevio.co.za"
     }
   ],
-  "_name_note": "GitHub's display name currently reads 'Cameron McAlister' (one L) while the account email and machine user are 'mcallister' (two). This file uses two. Fix whichever is wrong at github.com/settings/profile."
+  "_name_note": "GitHub's display name currently reads 'Cameron McAlister' (one L) while the account email and machine user are 'mcallister' (two). This file uses two. Fix whichever is wrong at github.com/settings/profile.",
+  "summary": "I design the thing, build it, and run the ads that sell it. One person, both halves.",
+  "capabilities": [
+    "Interfaces and design systems",
+    "Web and product engineering",
+    "Tracking and attribution",
+    "Paid media, Meta and Google"
+  ],
+  "projects": [
+    {
+      "name": "Krevio",
+      "blurb": "Work OS at ClickUp parity",
+      "metric": "88%",
+      "ramp": [
+        6,
+        11,
+        9,
+        17,
+        13,
+        21,
+        18,
+        25,
+        24,
+        30
+      ]
+    },
+    {
+      "name": "New Money",
+      "blurb": "Quant terminal, strategy lab",
+      "metric": "17/17",
+      "ramp": [
+        9,
+        14,
+        12,
+        19,
+        16,
+        23,
+        20,
+        26,
+        22,
+        28
+      ]
+    },
+    {
+      "name": "Float",
+      "blurb": "Finance OS, never moves money",
+      "metric": "9/12",
+      "ramp": [
+        14,
+        10,
+        18,
+        13,
+        21,
+        16,
+        24,
+        19,
+        27,
+        23
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "label": "GitHub",
+      "handle": "CameronMc12",
+      "url": "https://github.com/CameronMc12"
+    },
+    {
+      "label": "Website",
+      "handle": "krevio.co.za",
+      "url": "https://krevio.co.za"
+    },
+    {
+      "label": "LinkedIn",
+      "handle": "cameronmcallister",
+      "url": "https://linkedin.com/in/cameronmcallister"
+    },
+    {
+      "label": "X",
+      "handle": "@cameronmcal",
+      "url": "https://x.com/cameronmcal"
+    },
+    {
+      "label": "Instagram",
+      "handle": "@cameronmcal",
+      "url": "https://instagram.com/cameronmcal"
+    }
+  ],
+  "email": "hello@krevio.co.za",
+  "_accounts_note": "GitHub and the website are verified. LinkedIn, X, Instagram and the email address are PLACEHOLDERS Cameron has to confirm or replace before anyone clicks them.",
+  "shipped": [
+    {
+      "when": "AUG 2026",
+      "what": "Krevio Money module shipped",
+      "detail": "Sixteen slices in one pass. Best commit day of the year landed here."
+    },
+    {
+      "when": "JUN 2026",
+      "what": "New Money Strategy Lab, all 17 boards",
+      "detail": "Seventeen boards from one contract, built across four phases."
+    },
+    {
+      "when": "MAR 2026",
+      "what": "Ikonik tracking stack rebuilt",
+      "detail": "Meta CAPI plus server-side GA4. Attribution stopped being a guess."
+    },
+    {
+      "when": "DEC 2025",
+      "what": "Float shell v2.2",
+      "detail": "Nine of twelve screens and a design system that holds."
+    }
+  ],
+  "_shipped_note": "PLACEHOLDER milestones. Cameron has not confirmed these dates or wording."
 }

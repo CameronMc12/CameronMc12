@@ -1,7 +1,6 @@
-# Local only. Needed by render_wordmark.py, which rasterises a real TTF and
-# runs a voxel z-buffer. It also needs Futura Condensed ExtraBold from
-# /System/Library/Fonts/Supplemental/Futura.ttc, which does not exist on a
-# GitHub runner — hence wordmark-*.svg is committed, not built in CI.
+# Local only. Nothing in the current renderer set needs numpy, Pillow or a font
+# file — every section is drawn from data, so `requirements.txt` covers CI and
+# local work alike. Kept as a placeholder in case a raster pipeline comes back
+# (the archived v1 ASCII portrait and 3D wordmark needed both, plus a macOS
+# font; see _archive/v1-float/).
 -r requirements.txt
-numpy>=2.0
-pillow>=10.0
