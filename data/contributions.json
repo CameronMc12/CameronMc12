@@ -1,24 +1,24 @@
 {
   "username": "CameronMc12",
-  "generated_at": "2026-09-20T09:50:27Z",
+  "generated_at": "2026-09-21T10:46:40Z",
   "range": {
     "start": "2025-09-21",
+    "end": "2026-09-21"
+  },
+  "total_contributions": 4815,
+  "active_days": 217,
+  "active_ratio": 0.5929,
+  "avg_per_active_day": 22.2,
+  "last_30_total": 726,
+  "current_streak": {
+    "length": 28,
+    "start": "2026-08-24",
     "end": "2026-09-20"
   },
-  "total_contributions": 4814,
-  "active_days": 216,
-  "active_ratio": 0.5918,
-  "avg_per_active_day": 22.3,
-  "last_30_total": 766,
-  "current_streak": {
-    "length": 27,
-    "start": "2026-08-24",
-    "end": "2026-09-19"
-  },
   "longest_streak": {
-    "length": 27,
+    "length": 28,
     "start": "2026-08-24",
-    "end": "2026-09-19"
+    "end": "2026-09-20"
   },
   "best_day": {
     "date": "2026-08-04",
@@ -26,7 +26,7 @@
   },
   "busiest_weekday": "Fri",
   "by_weekday": [
-    81,
+    82,
     770,
     1015,
     953,
@@ -85,7 +85,7 @@
     },
     {
       "month": "2026-09",
-      "total": 346
+      "total": 347
     }
   ],
   "days": [
@@ -1547,6 +1547,10 @@
     },
     {
       "date": "2026-09-20",
+      "count": 1
+    },
+    {
+      "date": "2026-09-21",
       "count": 0
     }
   ]
